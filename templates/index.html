@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Database</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <script src="/static/js/scripts.js" defer></script>
+</head>
+<body>
+    <h1>Trade Database</h1>
+
+    <!-- Form to Add Trades -->
+    <form action="/add" method="POST">
+        <label for="currency_pair">Currency Pair:</label>
+        <input type="text" name="currency_pair" required>
+
+        <label for="date">Date:</label>
+        <input type="date" name="date" required>
+
+        <label for="buy_sell">Buy/Sell:</label>
+        <select name="buy_sell" required>
+            <option value="Buy">Buy</option>
+            <option value="Sell">Sell</option>
+        </select>
+
+        <label for="type_of_trade">Type of Trade:</label>
+        <input type="text" name="type_of_trade" required>
+
+        <label for="link_to_trade">Link to Trade:</label>
+        <input type="url" name="link_to_trade">
+
+        <button type="submit">Add Trade</button>
+    </form>
+
+    <!-- Table to Display Trades -->
+    <table>
+        <thead>
+            <tr>
+                <th>Serial Number</th>
+                <th>Currency Pair</th>
+                <th>Date</th>
+                <th>Buy/Sell</th>
+                <th>Type of Trade</th>
+                <th>Link</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trade in trades %}
+            <tr>
+                <td>{{ trade[0] }}</td>
+                <td>{{ trade[1] }}</td>
+                <td>{{ trade[2] }}</td>
+                <td>{{ trade[3] }}</td>
+                <td>{{ trade[4] }}</td>
+                <td><a href="{{ trade[5] }}" target="_blank">View</a></td>
+                <td>
+                    <form action="/delete/{{ trade[0] }}" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
